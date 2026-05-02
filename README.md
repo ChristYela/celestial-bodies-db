@@ -1,10 +1,11 @@
 Celestial Bodies Database
 A PostgreSQL database project built for the freeCodeCamp Relational Database Certification.
+
 Project Overview
 This project demonstrates the design and implementation of a relational database that catalogs celestial bodies in our universe. The database includes galaxies, stars, planets, moons, and black holes with proper relationships, constraints, and sample data.
+
 Database Schema
 Tables
-Table
 Table	Description	Rows
 galaxy	Galaxies in the universe	6
 star	Stars within galaxies	6
@@ -12,12 +13,8 @@ planet	Planets orbiting stars	12
 moon	Moons orbiting planets	20
 black_hole	Black holes in galaxies	3
 Relationships
-plain
-Copy
-galaxy (1) ───< star (many)
-star (1) ───< planet (many)
-planet (1) ───< moon (many)
-galaxy (1) ───< black_hole (many)
+galaxy (1) ───< star (many) star (1) ───< planet (many) planet (1) ───< moon (many) galaxy (1) ───< black_hole (many)
+
 Entity Details
 galaxy
 galaxy_id - Primary key (SERIAL)
@@ -60,7 +57,6 @@ mass - Mass in solar masses (BIGINT, NOT NULL)
 is_supermassive - Classification (BOOLEAN)
 description - Brief description (TEXT)
 Data Types Used
-Table
 Type	Usage
 SERIAL	Auto-incrementing primary keys
 INT	Numeric values (age, temperature, mass for stars/planets)
@@ -77,38 +73,21 @@ UNIQUE: Name columns are unique across all tables
 DEFAULT: Boolean fields default to false where applicable
 How to Use
 Restore the Database
-bash
-Copy
-# Create the database
+```bash
+
+Create the database
 psql -U postgres -c "CREATE DATABASE universe;"
 
-# Restore from dump
-psql -U postgres -d universe < universe.sql
+Restore from dump
+psql -U postgres -d universe < universe.sql ```
+
 Query Examples
-sql
-Copy
--- List all planets with their stars and galaxies
-SELECT 
-    p.name AS planet,
-    s.name AS star,
-    g.name AS galaxy
-FROM planet p
-JOIN star s ON p.star_id = s.star_id
-JOIN galaxy g ON s.galaxy_id = g.galaxy_id;
+```sql -- List all planets with their stars and galaxies SELECT p.name AS planet, s.name AS star, g.name AS galaxy FROM planet p JOIN star s ON p.star_id = s.star_id JOIN galaxy g ON s.galaxy_id = g.galaxy_id;
 
--- Count moons per planet
-SELECT 
-    p.name AS planet,
-    COUNT(m.moon_id) AS moon_count
-FROM planet p
-LEFT JOIN moon m ON p.planet_id = m.planet_id
-GROUP BY p.name
-ORDER BY moon_count DESC;
+-- Count moons per planet SELECT p.name AS planet, COUNT(m.moon_id) AS moon_count FROM planet p LEFT JOIN moon m ON p.planet_id = m.planet_id GROUP BY p.name ORDER BY moon_count DESC;
 
--- Find supermassive black holes
-SELECT name, mass, description 
-FROM black_hole 
-WHERE is_supermassive = true;
+-- Find supermassive black holes SELECT name, mass, description FROM black_hole WHERE is_supermassive = true; ```
+
 Project Requirements Met
 ✅ Database named universe
 ✅ At least 5 tables
@@ -122,13 +101,16 @@ Project Requirements Met
 ✅ Minimum row counts: galaxy (6), star (6), planet (12), moon (20)
 ✅ NOT NULL constraints on required fields
 ✅ UNIQUE constraint on name columns
+
 Technologies
 PostgreSQL 12+
 psql command-line tool
 pg_dump for database export
 Certification
 This project is part of the freeCodeCamp Relational Database Certification.
+
 Author
 Built as a required project for freeCodeCamp certification.
+
 License
 This project is open source and available for educational purposes.
